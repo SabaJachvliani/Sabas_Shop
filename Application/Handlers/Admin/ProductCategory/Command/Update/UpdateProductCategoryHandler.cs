@@ -17,6 +17,7 @@ namespace Application.Handlers.Admin.ProductCategory.Command.Update
             }
 
             category.Name = request.Name;
+            
 
             await _db.SaveChangesAsync(cancellationToken);
 

@@ -13,11 +13,15 @@ namespace Application.Handlers.Admin.Product.Comands.Delete
         public async Task<Unit> Handle(DeleteProductCommand request, CancellationToken ct)
         {
             var affected = await _db.Products
-                .Where(p => p.Id == request.Id)
-                .ExecuteDeleteAsync(ct);
+                .FirstOrDefaultAsync(p => p.Id == request.Id);
+                
 
-            if (affected == 0)
+            if (affected is null)
                 throw new KeyNotFoundException($"Product with Id={request.Id} not found.");
+
+            affected.DeleteTime = DateTime.UtcNow;
+
+
 
             return Unit.Value;
         }
