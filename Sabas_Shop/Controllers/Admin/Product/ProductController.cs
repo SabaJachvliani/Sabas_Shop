@@ -1,6 +1,8 @@
 ﻿using Application.Handlers.Admin.Product.Comands.Create;
 using Application.Handlers.Admin.Product.Comands.Delete;
 using Application.Handlers.Admin.Product.Comands.Update;
+using Application.Handlers.Admin.Product.Queries.GetProductById;
+using Application.Handlers.Admin.Product.Queries.GetProductList;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Sabas_Shop.Settings;
@@ -16,18 +18,16 @@ namespace Sabas_Shop.Controllers.Admin.Product
         public async Task<IActionResult> Create([FromBody] CreateProductCommand command, CancellationToken ct)
         {
             var id = await Sender.Send(command, ct);
-            return Ok(new { id });
+            return Ok(id);
            
         }
 
         [HttpPut("Update")]
-        public async Task<IActionResult> Update([FromBody] UpdateProductCommand command, CancellationToken ct)
+        public IActionResult Update([FromBody] UpdateProductCommand command, CancellationToken ct)
         {
-            if ( command.Id <= 0)
-                return BadRequest("Route id must match body id.");
-
-            var updatedId = await Sender.Send(command, ct);
-            return Ok(new { id = updatedId });
+            
+            var updatedId = Sender.Send(command, ct);
+            return (IActionResult)updatedId;
         }
 
         [HttpDelete("Delete")]
@@ -36,5 +36,21 @@ namespace Sabas_Shop.Controllers.Admin.Product
             await Sender.Send(new DeleteProductCommand(id), ct);
             return NoContent();
         }
-    }
+
+        [HttpGet("GetProductList")]
+        public async Task<IActionResult> Get( CancellationToken ct)
+        {
+            var productList = await Sender.Send(new GetProductListQuery(), ct);
+            return Ok(productList);
+        }
+
+        [HttpGet("GetProductById")]
+        public async Task<IActionResult> Get([FromQuery]int id, CancellationToken ct)
+        {
+            var productById = await Sender.Send(new GetProductByIdQuery(id), ct);
+            return Ok(productById);
+        }
+
+
+    }   
 }

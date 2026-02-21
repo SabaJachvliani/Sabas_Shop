@@ -1,9 +1,6 @@
 ﻿using Application.Interfaces.Infrastructure;
 using Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Application.Handlers.Admin.Product.Comands.Create
 {
