@@ -1,9 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Infrastucture.Configurations.ShopEntity
 {
@@ -21,14 +18,8 @@ namespace Infrastucture.Configurations.ShopEntity
 
             builder.Property(x => x.LastName)
                 .IsRequired()
-                .HasMaxLength(100);
-
-            builder.Property(x => x.PersonalId)
-                .IsRequired();
-
-           
-            builder.HasIndex(x => x.PersonalId).IsUnique();
-
+                .HasMaxLength(100);            
+                      
             // 1 Customer -> Many Orders
             builder.HasMany(x => x.ShopOrders)
                 .WithOne(o => o.ShopCostumers)

@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Infrastructure;
 using Domain.Entities;
+using Domain.Entities.RefreshToken;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastucture.SabaShopDbContext
@@ -17,8 +18,9 @@ namespace Infrastucture.SabaShopDbContext
         public DbSet<ShopOrder> Orders => Set<ShopOrder>();
         public DbSet<ShopCostumer> Costumers => Set<ShopCostumer>();
         public DbSet<ShopCastumersInformation> CostumersInformation => Set<ShopCastumersInformation>();
+        public DbSet<ShopRefreshToken> RefreshTokens => Set<ShopRefreshToken>();
 
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Loads all IEntityTypeConfiguration<> from Infrastructure assembly

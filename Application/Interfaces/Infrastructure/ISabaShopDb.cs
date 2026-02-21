@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Entities.RefreshToken;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Interfaces.Infrastructure
@@ -12,6 +13,7 @@ namespace Application.Interfaces.Infrastructure
         public DbSet<ShopOrderItem> OrderItems {  get;  }
         public DbSet<ShopCostumer> Costumers {  get;  }
         public DbSet<ShopCastumersInformation> CostumersInformation {  get;  }
+        public DbSet<ShopRefreshToken> RefreshTokens {  get; }
 
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

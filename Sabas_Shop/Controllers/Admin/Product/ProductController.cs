@@ -4,16 +4,18 @@ using Application.Handlers.Admin.Product.Comands.Update;
 using Application.Handlers.Admin.Product.Queries.GetProductById;
 using Application.Handlers.Admin.Product.Queries.GetProductList;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sabas_Shop.Settings;
 
 namespace Sabas_Shop.Controllers.Admin.Product
 {
+    [Authorize]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class ProductController : ApiControllerBase
     {
         public ProductController(ISender sender) : base(sender) { }
-
+        
         [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] CreateProductCommand command, CancellationToken ct)
         {
