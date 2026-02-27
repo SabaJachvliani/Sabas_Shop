@@ -41,6 +41,7 @@ namespace Sabas_Shop.Controllers.Admin.ProductCategory
 
         }
 
+
         [HttpDelete("DeleteProductCategory")]
         public async Task<IActionResult> Delete(DeleteProductCategoryCommand request, CancellationToken ct)
         {   

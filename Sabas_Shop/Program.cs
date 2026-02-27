@@ -11,9 +11,9 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-
-using System.Text;
 using Microsoft.OpenApi.Models;
+using Sabas_Shop.Services;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +24,9 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddValidatorsFromAssembly(typeof(ApplicationAssemblyMarker).Assembly);
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 builder.Services.AddTransient<Sabas_Shop.Middlewares.ValidationExceptionMiddleware>();
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 // -------------------- DB --------------------
 builder.Services.AddDbContext<SabaShopDb>(opt =>
@@ -116,6 +119,8 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
+
 var app = builder.Build();
 
 // -------------------- Swagger UI --------------------
