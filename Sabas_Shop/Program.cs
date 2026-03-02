@@ -6,6 +6,7 @@ using Asp.Versioning;
 using Asp.Versioning.Routing;
 using FluentValidation;
 using Infrastucture.Auth;
+using Infrastucture.Caching;
 using Infrastucture.SabaShopDbContext;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -29,6 +30,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 builder.Services.AddMemoryCache();
+builder.Services.AddSingleton<ICacheService, MemoryCacheService>();
 
 // -------------------- DB --------------------
 builder.Services.AddDbContext<SabaShopDb>(opt =>

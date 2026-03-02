@@ -15,7 +15,6 @@ namespace Application.Interfaces.Infrastructure
         public DbSet<ShopCastumersInformation> CostumersInformation {  get;  }
         public DbSet<ShopRefreshToken> RefreshTokens {  get; }
 
-
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }
