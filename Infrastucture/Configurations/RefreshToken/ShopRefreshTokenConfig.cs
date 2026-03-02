@@ -14,7 +14,7 @@ namespace Infrastucture.Configurations.RefreshToken
             b.HasIndex(x => x.TokenHash).IsUnique();
 
             b.HasOne(x => x.User)
-                .WithMany() // or .WithMany(u => u.RefreshTokens) if you add navigation
+                .WithMany() 
                 .HasForeignKey(x => x.UserId);
         }
     }

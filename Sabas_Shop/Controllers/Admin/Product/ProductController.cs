@@ -4,13 +4,12 @@ using Application.Handlers.Admin.Product.Comands.Update;
 using Application.Handlers.Admin.Product.Queries.GetProductById;
 using Application.Handlers.Admin.Product.Queries.GetProductList;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sabas_Shop.Settings;
 
 namespace Sabas_Shop.Controllers.Admin.Product
 {
-    [Authorize]
+    
     [Route("api/v{version:apiVersion}/[controller]")]
     public class ProductController : ApiControllerBase
     {
@@ -52,7 +51,6 @@ namespace Sabas_Shop.Controllers.Admin.Product
             var productById = await Sender.Send(new GetProductByIdQuery(id), ct);
             return Ok(productById);
         }
-
 
     }   
 }

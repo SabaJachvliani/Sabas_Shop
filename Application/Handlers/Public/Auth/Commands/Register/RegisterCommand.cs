@@ -9,8 +9,5 @@ namespace Application.Handlers.Public.Auth.Commands.Register
         string LastName, 
         string Email, 
         string Password
-    ) : IRequest<AuthResponseDto>;
-
-    
-
+    ) : IRequest<AuthResponseDto>;   
 }

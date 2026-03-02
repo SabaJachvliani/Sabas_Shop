@@ -59,10 +59,7 @@ namespace Application.Handlers.Public.Auth.Commands.Register
 
             await _refreshTokens.SaveChangesAsync(cancellationToken);
 
-            return new AuthResponseDto(access, refresh);
-
-            
-
+            return new AuthResponseDto(access, refresh);            
         }
     }
 }

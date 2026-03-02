@@ -11,5 +11,4 @@ namespace Application.Handlers.Admin.ProductCategory.Queries.GetProductCategoruB
                 .WithMessage("Id must be greater than 0.");
         }
     }
-
 }

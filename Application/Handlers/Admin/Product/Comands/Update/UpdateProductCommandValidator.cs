@@ -16,8 +16,7 @@ namespace Application.Handlers.Admin.Product.Comands.Update
 
             RuleFor(x => x.Price)
                 .GreaterThan(0);
-
-            // optional (allow empty), just limit size
+            
             RuleFor(x => x.Description)
                 .MaximumLength(2000);
 

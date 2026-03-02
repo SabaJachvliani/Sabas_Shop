@@ -1,4 +1,6 @@
-﻿using Application.Interfaces.Infrastructure;
+﻿using Application.Common.Caching;
+using Application.Interfaces.Auth;
+using Application.Interfaces.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,21 +9,33 @@ namespace Application.Handlers.Admin.Product.Comands.Delete
     public sealed class DeleteProductHandler : IRequestHandler<DeleteProductCommand, Unit>
     {
         private readonly ISabaShopDb _db;
+        private readonly ICacheService _cache;
 
-        public DeleteProductHandler(ISabaShopDb db) => _db = db;
+        public DeleteProductHandler(ISabaShopDb db, ICacheService cache)
+        {
+            _db = db;
+            _cache = cache;
+        }
 
         public async Task<Unit> Handle(DeleteProductCommand request, CancellationToken ct)
         {
-            var affected = await _db.Products
+            var product = await _db.Products
                 .FirstOrDefaultAsync(p => p.Id == request.Id);
                 
 
-            if (affected is null)
+            if (product is null)
                 throw new KeyNotFoundException($"Product with Id={request.Id} not found.");
 
-            affected.DeleteTime = DateTime.UtcNow;
+            var categoryId = product.Product_CategoryId;
 
+            product.DeleteTime = DateTime.UtcNow;
 
+            await _db.SaveChangesAsync(ct);
+            
+            _cache.Remove(CacheKeys.ProductList);
+            _cache.Remove(CacheKeys.ProductById(request.Id));
+            _cache.Remove(CacheKeys.ProductCategoryList);
+            _cache.Remove(CacheKeys.ProductCategoryById(categoryId));
 
             return Unit.Value;
         }

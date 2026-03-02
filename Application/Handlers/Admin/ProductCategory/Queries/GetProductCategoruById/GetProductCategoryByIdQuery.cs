@@ -3,6 +3,6 @@ using MediatR;
 
 namespace Application.Handlers.Admin.ProductCategory.Queries.GetProductCategoruById
 {
-    public record GetProductCategoryByIdQuery(int Id) : IRequest<GetProductCategoryByIdDTO>;
+    public record GetProductCategoryByIdQuery(int Id) : IRequest<GetProductCategoryDTO>;
     
 }

@@ -4,7 +4,7 @@
     {
         public long Id { get; set; }
 
-        public int UserId { get; set; }               // your ShopCostumer Id type = int
+        public int UserId { get; set; }               
         public ShopCostumer User { get; set; } = null!;
 
         public string TokenHash { get; set; } = null!;

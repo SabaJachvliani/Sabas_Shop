@@ -1,4 +1,5 @@
-﻿using Application.Handlers.Admin.ProductCategory.Command.Delete;
+﻿using Application.Handlers.Admin.ProductCategory.Command.Create;
+using Application.Handlers.Admin.ProductCategory.Command.Delete;
 using Application.Handlers.Admin.ProductCategory.Command.Update;
 using Application.Handlers.Admin.ProductCategory.Queries.GetProductCategoruById;
 using Application.Handlers.Admin.ProductCategory.Queries.GetProductCategoryList;
@@ -34,13 +35,12 @@ namespace Sabas_Shop.Controllers.Admin.ProductCategory
         }
 
         [HttpPost("CreateProductCategory")]
-        public async Task<IActionResult> Create([FromBody] DeleteProductCategoryCommand request, CancellationToken ct)
+        public async Task<IActionResult> Create([FromBody] CreateProductCategoryCommand request, CancellationToken ct)
         {
             var productCategory = await Sender.Send(request, ct);
             return Ok(productCategory);
 
         }
-
 
         [HttpDelete("DeleteProductCategory")]
         public async Task<IActionResult> Delete(DeleteProductCategoryCommand request, CancellationToken ct)

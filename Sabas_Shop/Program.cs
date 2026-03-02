@@ -28,6 +28,8 @@ builder.Services.AddTransient<Sabas_Shop.Middlewares.ValidationExceptionMiddlewa
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
+builder.Services.AddMemoryCache();
+
 // -------------------- DB --------------------
 builder.Services.AddDbContext<SabaShopDb>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")));

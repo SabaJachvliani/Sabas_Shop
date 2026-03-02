@@ -15,5 +15,4 @@ namespace Application.Handlers.Admin.ProductCategory.Command.Update
                 .MaximumLength(200).WithMessage("Name must be <= 200 characters.");
         }
     }
-
 }

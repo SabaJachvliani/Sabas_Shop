@@ -9,9 +9,7 @@
         public string Mail { get; set; } = null!;
         public string PasswordHash { get; set; } = null!;
         public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
-
-        
-
+       
         public List<ShopOrder> ShopOrders { get; set; } = new();
         public List<ShopCastumersInformation> CastumersInformations { get; set; } = new();
 

@@ -43,7 +43,6 @@ namespace Application.Handlers.Public.Auth.Commands.Login
 
             await _refreshTokens.SaveChangesAsync(ct);
 
-
             return new LoginResponseDto(token, refresh);
         }
     }

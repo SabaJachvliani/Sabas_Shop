@@ -17,7 +17,5 @@ namespace Application.Interfaces.Infrastructure
 
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
-
-
     }
 }

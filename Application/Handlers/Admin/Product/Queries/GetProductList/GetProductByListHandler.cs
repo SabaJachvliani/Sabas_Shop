@@ -1,27 +1,47 @@
-﻿using Application.DTO.Product;
+﻿using Application.Common.Caching;
+using Application.DTO.Product;
+using Application.Interfaces.Auth;
 using Application.Interfaces.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Handlers.Admin.Product.Queries.GetProductList
 {
-    public class GetProductByListHandler : IRequestHandler<GetProductListQuery, List<GetProductListDTO>>
+    public class GetProductByListHandler : IRequestHandler<GetProductListQuery, List<GetProductDTO>>
     {
-        public readonly ISabaShopDb _db;
-        public GetProductByListHandler(ISabaShopDb db) => _db = db;
-        public async Task<List<GetProductListDTO>> Handle(GetProductListQuery request, CancellationToken cancellationToken)
-        {
-            return await _db.Products.Where(x => x.DeleteTime == null)
-            .Select(p => new GetProductListDTO
-            {
+        private readonly ISabaShopDb _db;
+        private readonly ICacheService _cache;
 
-                Id = p.Id,
-                Name = p.Name,
-                Price = p.Price,
-                Description = p.Description
-                
-            })
-            .ToListAsync(cancellationToken);
+        public GetProductByListHandler(ISabaShopDb db, ICacheService cache)
+        {
+            _db = db;
+            _cache = cache;
+        }
+        public async Task<List<GetProductDTO>> Handle(GetProductListQuery request, CancellationToken cancellationToken)
+        {
+            return await _cache.GetOrCreateAsync(
+        CacheKeys.ProductList,
+        TimeSpan.FromMinutes(10),
+        async token =>
+        {
+            return await _db.Products
+                .AsNoTracking()
+                .Where(x => x.DeleteTime == null)
+                .Select(p => new GetProductDTO
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    Description = p.Description,
+                    Category = new ProductCategoryDTO
+                    {
+                        Id = p.ShopProductCategorys.Id,
+                        Name = p.ShopProductCategorys.Name
+                    }
+                })
+                .ToListAsync(token);
+        },
+        cancellationToken);
 
         }
     }

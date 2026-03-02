@@ -19,14 +19,12 @@ namespace Infrastucture.Configurations.ShopEntity
             builder.Property(x => x.LastName)
                 .IsRequired()
                 .HasMaxLength(100);            
-                      
-            // 1 Customer -> Many Orders
+                                 
             builder.HasMany(x => x.ShopOrders)
                 .WithOne(o => o.ShopCostumers)
                 .HasForeignKey(o => o.CostumerId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            // 1 Customer -> Many CustomerInformations
+          
             builder.HasMany(x => x.CastumersInformations)
                 .WithOne(i => i.ShopCostumers)
                 .HasForeignKey(i => i.CostumerId)

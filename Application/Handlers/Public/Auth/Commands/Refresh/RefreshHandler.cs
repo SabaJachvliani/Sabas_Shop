@@ -25,7 +25,6 @@ namespace Application.Handlers.Public.Auth.Commands.Refresh
 
             if (oldToken == null || !oldToken.IsActive)
                 throw new Exception("Invalid refresh token");
-
            
             var user = await _users.GetByIdAsync(oldToken.UserId, ct);
             if (user == null) throw new Exception("User not found");

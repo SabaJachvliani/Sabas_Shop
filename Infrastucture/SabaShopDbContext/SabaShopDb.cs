@@ -8,10 +8,8 @@ namespace Infrastucture.SabaShopDbContext
     public class SabaShopDb : DbContext, ISabaShopDb
     {
         public SabaShopDb(DbContextOptions<SabaShopDb> options)
-            : base(options)
-        {
-        }
-        
+            : base(options) { }
+                        
         public DbSet<ShopProductCategory> Categories => Set<ShopProductCategory>();
         public DbSet<ShopProduct> Products => Set<ShopProduct>();
         public DbSet<ShopOrderItem> OrderItems => Set<ShopOrderItem>();
@@ -20,10 +18,8 @@ namespace Infrastucture.SabaShopDbContext
         public DbSet<ShopCastumersInformation> CostumersInformation => Set<ShopCastumersInformation>();
         public DbSet<ShopRefreshToken> RefreshTokens => Set<ShopRefreshToken>();
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            // Loads all IEntityTypeConfiguration<> from Infrastructure assembly
+        {            
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SabaShopDb).Assembly);
 
             base.OnModelCreating(modelBuilder);

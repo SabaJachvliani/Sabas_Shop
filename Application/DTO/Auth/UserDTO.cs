@@ -6,7 +6,7 @@
         public string Email { get; init; } = null!;
         public string firstName { get; init; } = null!;
         public string lastName { get; init; } = null!;       
-        public string Roles { get; init; } 
+        public string? Roles { get; init; } 
     }
 }
 
