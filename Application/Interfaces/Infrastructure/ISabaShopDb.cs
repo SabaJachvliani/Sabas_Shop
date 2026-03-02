@@ -6,8 +6,10 @@ namespace Application.Interfaces.Infrastructure
 {
     public interface ISabaShopDb
     {
+        
         public DbSet<TEntity> Set<TEntity>() where TEntity : class;
 
+        public DbSet<ShopProductPhoto> ProductPhotos { get;  }
         public DbSet<ShopProductCategory> Categories { get;  }
         public DbSet<ShopProduct> Products {  get;  }
         public DbSet<ShopOrderItem> OrderItems {  get;  }

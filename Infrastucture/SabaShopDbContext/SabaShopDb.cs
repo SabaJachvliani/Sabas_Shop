@@ -9,7 +9,8 @@ namespace Infrastucture.SabaShopDbContext
     {
         public SabaShopDb(DbContextOptions<SabaShopDb> options)
             : base(options) { }
-                        
+
+        public DbSet<ShopProductPhoto> ProductPhotos => Set<ShopProductPhoto>();
         public DbSet<ShopProductCategory> Categories => Set<ShopProductCategory>();
         public DbSet<ShopProduct> Products => Set<ShopProduct>();
         public DbSet<ShopOrderItem> OrderItems => Set<ShopOrderItem>();

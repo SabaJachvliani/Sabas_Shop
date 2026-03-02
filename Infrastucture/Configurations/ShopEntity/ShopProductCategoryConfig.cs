@@ -22,6 +22,8 @@ namespace Infrastucture.Configurations.ShopEntity
                 .OnDelete(DeleteBehavior.Restrict);
             
             builder.HasIndex(x => x.Name).IsUnique();
+
+
         }
     }
 }

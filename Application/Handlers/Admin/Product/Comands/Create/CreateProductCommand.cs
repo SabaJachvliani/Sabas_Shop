@@ -4,10 +4,11 @@ namespace Application.Handlers.Admin.Product.Comands.Create
 {
     public record CreateProductCommand
     (
-     string Name, 
+     string Name,
      decimal Price,
-     string Description,
-     int ProductCategoryId
+     string? Description,
+     int ProductCategoryId,
+     List<PhotoUpload>? Photos = null
     )
         : IRequest<int>;
 }

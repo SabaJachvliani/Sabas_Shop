@@ -4,6 +4,7 @@ using Infrastucture.SabaShopDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastucture.Migrations
 {
     [DbContext(typeof(SabaShopDb))]
-    partial class SabaShopDbModelSnapshot : ModelSnapshot
+    [Migration("20260302101755_addnewvalueinshopProductPhotoUrl")]
+    partial class addnewvalueinshopProductPhotoUrl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -229,36 +232,6 @@ namespace Infrastucture.Migrations
                     b.ToTable("ShopProductCategories", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.ShopProductPhoto", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId", "Order")
-                        .IsUnique();
-
-                    b.ToTable("ShopProductPhotos", (string)null);
-                });
-
             modelBuilder.Entity("Domain.Entities.RefreshToken.ShopRefreshToken", b =>
                 {
                     b.HasOne("Domain.Entities.ShopCostumer", "User")
@@ -322,17 +295,6 @@ namespace Infrastucture.Migrations
                     b.Navigation("ShopProductCategorys");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ShopProductPhoto", b =>
-                {
-                    b.HasOne("Domain.Entities.ShopProduct", "Product")
-                        .WithMany("Photos")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("Domain.Entities.ShopCostumer", b =>
                 {
                     b.Navigation("CastumersInformations");
@@ -347,8 +309,6 @@ namespace Infrastucture.Migrations
 
             modelBuilder.Entity("Domain.Entities.ShopProduct", b =>
                 {
-                    b.Navigation("Photos");
-
                     b.Navigation("ShopOrderItems");
                 });
 

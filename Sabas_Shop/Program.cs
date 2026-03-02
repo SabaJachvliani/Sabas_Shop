@@ -8,6 +8,7 @@ using FluentValidation;
 using Infrastucture.Auth;
 using Infrastucture.Caching;
 using Infrastucture.SabaShopDbContext;
+using Infrastucture.Storage;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -66,6 +67,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
+builder.Services.AddScoped<IFileStorage, LocalFileStorage>();
 
 // -------------------- Controllers --------------------
 builder.Services.AddControllers();
@@ -141,6 +143,7 @@ app.UseMiddleware<Sabas_Shop.Middlewares.ValidationExceptionMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseStaticFiles();
 
 app.MapControllers();
 

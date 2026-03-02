@@ -4,9 +4,12 @@
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
+        public string? PhotoUrl { get; set; }
         public decimal Price { get; set; }
-        public string Description { get; set; } = null!;
-        public DateTime? DeleteTime { get; set; } 
+        public string? Description { get; set; } = null!;
+        public DateTime? DeleteTime { get; set; }
+
+        public List<ShopProductPhoto> Photos { get; set; } = new();
 
         public int Product_CategoryId { get; set; }
         public ShopProductCategory ShopProductCategorys { get; set; } = null!;
