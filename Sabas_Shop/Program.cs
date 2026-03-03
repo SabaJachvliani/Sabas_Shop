@@ -1,4 +1,5 @@
 using Application.Common.Behaviors;
+using Application.Common.Mail;
 using Application.Interfaces.Auth;
 using Application.Interfaces.Infrastructure;
 using Application.Markers;
@@ -7,6 +8,7 @@ using Asp.Versioning.Routing;
 using FluentValidation;
 using Infrastucture.Auth;
 using Infrastucture.Caching;
+using Infrastucture.Mail;
 using Infrastucture.SabaShopDbContext;
 using Infrastucture.Storage;
 using MediatR;
@@ -26,6 +28,9 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddValidatorsFromAssembly(typeof(ApplicationAssemblyMarker).Assembly);
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 builder.Services.AddTransient<Sabas_Shop.Middlewares.ValidationExceptionMiddleware>();
+
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("Email"));
+builder.Services.AddScoped<IEmailSender, SmtpEmailSender>();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();

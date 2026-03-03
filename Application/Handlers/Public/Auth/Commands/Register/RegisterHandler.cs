@@ -28,8 +28,6 @@ namespace Application.Handlers.Public.Auth.Commands.Register
             var exists = await _users.GetByEmailAsync(email, cancellationToken);
             if (exists != null) throw new Exception("User already exists"); 
 
-
-
             var user = new ShopCostumer
             {
 
@@ -42,7 +40,6 @@ namespace Application.Handlers.Public.Auth.Commands.Register
 
             await _users.AddAsync(user, cancellationToken);
             await _users.SaveChangesAsync(cancellationToken);
-
             
             var access = _jwt.CreateAccessToken(user);
 

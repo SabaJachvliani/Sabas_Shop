@@ -2,11 +2,14 @@
 {
     public class ShopCostumer
     {
-        public int Id { get; set; }
+        public int Id { get; set; }       
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;        
         public string Role { get; set; } = "User";
         public string Mail { get; set; } = null!;
+        public bool IsConfirmd {  get; set; }
+        public int? VarificationCode { get; set; }
+        public DateTime? CodeActivationTime { get; set; } 
         public string PasswordHash { get; set; } = null!;
         public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
        
