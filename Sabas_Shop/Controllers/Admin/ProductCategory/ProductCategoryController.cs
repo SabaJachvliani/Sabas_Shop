@@ -5,6 +5,7 @@ using Application.Handlers.Admin.ProductCategory.Queries.GetProductCategoruById;
 using Application.Handlers.Admin.ProductCategory.Queries.GetProductCategoryList;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Sabas_Shop.Settings;
 
 namespace Sabas_Shop.Controllers.Admin.ProductCategory
@@ -20,6 +21,7 @@ namespace Sabas_Shop.Controllers.Admin.ProductCategory
             return Ok(productCategory);
         }
 
+        [EnableRateLimiting("General3PerMin")]
         [HttpGet("GetProductCategoryList")]
         public async Task<IActionResult> Get( CancellationToken ct)
         {

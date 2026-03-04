@@ -20,8 +20,7 @@ namespace Application.Handlers.Admin.Product.Comands.Delete
         public async Task<Unit> Handle(DeleteProductCommand request, CancellationToken ct)
         {
             var product = await _db.Products
-                .FirstOrDefaultAsync(p => p.Id == request.Id);
-                
+                .FirstOrDefaultAsync(p => p.Id == request.Id && p.DeleteTime == null, ct);
 
             if (product is null)
                 throw new KeyNotFoundException($"Product with Id={request.Id} not found.");
@@ -29,9 +28,8 @@ namespace Application.Handlers.Admin.Product.Comands.Delete
             var categoryId = product.Product_CategoryId;
 
             product.DeleteTime = DateTime.UtcNow;
-
             await _db.SaveChangesAsync(ct);
-            
+
             _cache.Remove(CacheKeys.ProductList);
             _cache.Remove(CacheKeys.ProductById(request.Id));
             _cache.Remove(CacheKeys.ProductCategoryList);

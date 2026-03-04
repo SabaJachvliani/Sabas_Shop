@@ -18,6 +18,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Sabas_Shop.Services;
 using System.Text;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -132,6 +133,26 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+    options.AddPolicy("General3PerMin", httpContext =>
+    {
+        var key = GetUserOrIpKey(httpContext);
+
+        return RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: key,
+            factory: _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 3,
+                Window = TimeSpan.FromMinutes(1),
+                QueueLimit = 0
+            });
+    });
+});
+
+
 var app = builder.Build();
 
 // -------------------- Swagger UI --------------------
@@ -144,12 +165,25 @@ if (app.Environment.IsDevelopment())
 // -------------------- Middleware Pipeline --------------------
 app.UseHttpsRedirection();
 
+
 app.UseMiddleware<Sabas_Shop.Middlewares.ValidationExceptionMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseRateLimiter();
 app.UseStaticFiles();
-
 app.MapControllers();
 
 app.Run();
+static string GetUserOrIpKey(HttpContext ctx)
+{
+    var userId =
+        ctx.User?.FindFirst("sub")?.Value ??
+        ctx.User?.FindFirst("id")?.Value ??
+        ctx.User?.FindFirst("UserId")?.Value;
+
+    if (!string.IsNullOrWhiteSpace(userId))
+        return $"user:{userId}";
+
+    return $"ip:{ctx.Connection.RemoteIpAddress?.ToString() ?? "unknown"}";
+}
